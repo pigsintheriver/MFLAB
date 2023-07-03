@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.nio.file.WatchEvent;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.Configuration;
@@ -13,6 +14,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 
 import java.io.IOException;
+
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.mapreduce.*;
@@ -21,6 +23,7 @@ import org.apache.hadoop.fs.Path;
 
 import java.io.IOException;
 import java.util.Iterator;
+
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.conf.Configuration;
@@ -31,33 +34,40 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.partition.TotalOrderPartitioner;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
-public class Task2 {
-    public static class ResourceMapper extends Mapper<Object, Text, Text, IntWritable> {
-        private final static IntWritable one = new IntWritable(1);
-//        private Text resourcePath = new Text();
 
-        public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            String line = value.toString();
-            WebLogBean log=WebLogParser.parsertask1(line);
-            if(log!=null&&log.isvalid()){
-                String[] tmp=log.getRequest().split(" ");
-                String request="";
-                if(tmp.length >=3 )
-                    request = tmp[1];
-                context.write(new Text(request),one);
-            }
-            else{
-                context.write(new Text(""),one);
-            }
-//            String[] tokens = line.split("\t");
-//            if (tokens.length >= 4) {
-//                String[] tmp = tokens[3].split(" ");
-//                String request = "";
+public class Task2 {
+    //    public static class ResourceMapper extends Mapper<Object, Text, Text, IntWritable> {
+//        private final static IntWritable one = new IntWritable(1);
+////        private Text resourcePath = new Text();
+//
+//        public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
+//            String line = value.toString();
+//            WebLogBean log=WebLogParser.parsertask1(line);
+//            if(log!=null&&log.isvalid()){
+//                String[] tmp=log.getRequest().split(" ");
+//                String request="";
 //                if(tmp.length >=3 )
 //                    request = tmp[1];
-//                resourcePath.set(request);
-//                context.write(resourcePath, one);
+//                context.write(new Text(request),one);
 //            }
+//            else{
+//                context.write(new Text(""),one);
+//            }
+//        }
+//    }
+    public static class ResourceMapper extends Mapper<Text, WebLogBean, Text, IntWritable> {
+        private final static IntWritable one = new IntWritable(1);
+
+        public void map(Text key, WebLogBean value, Context context) throws IOException, InterruptedException {
+            if (value.isvalid()) {
+                String[] tmp = value.getRequest().split(" ");
+                String request = "";
+                if (tmp.length >= 3)
+                    request = tmp[1];
+                context.write(new Text(request), one);
+            } else {
+                context.write(new Text(""), one);
+            }
         }
     }
 

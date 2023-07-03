@@ -34,19 +34,18 @@ import org.apache.hadoop.mapreduce.lib.partition.TotalOrderPartitioner;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class Task3 {
-    public static class IpMapper extends Mapper<Object, Text, Text, Text> {
+    public static class IpMapper extends Mapper<Text, WebLogBean, Text, Text> {
 
 
-        public void map(Object key, Text value, Mapper<Object,Text,Text,Text>.Context context) throws IOException, InterruptedException {
-            String line = value.toString();
-            WebLogBean log=WebLogParser.parsertask1(line);
-            if(log!=null&&log.isvalid()){
-                String[] tmp=log.getRequest().split(" ");
+        public void map(Text key, WebLogBean value, Mapper<Text,WebLogBean,Text,Text>.Context context) throws IOException, InterruptedException {
+
+            if(value.isvalid()){
+                String[] tmp=value.getRequest().split(" ");
                 String request="";
                 if(tmp.length >=3 )
                     request = tmp[1];
                 String ip = "";
-                ip = log.getRemote_addr();
+                ip = value.getRemote_addr();
                 context.write(new Text(request),new Text(ip));
             }
             else{
