@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="MFLAB:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/MFLAB_jar</output-path>
+    <root id="archive" name="MFLAB.jar">
+      <element id="module-output" name="MFLAB" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-app-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-core-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-common-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-shuffle-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-uploader-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-hs-plugins-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-nativetask-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-3.2.4-tests.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/hdfs/hadoop-hdfs-nfs-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/common/hadoop-common-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/hdfs/hadoop-hdfs-3.2.4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/hadoop_installs/hadoop/share/hadoop/common/hadoop-nfs-3.2.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
