@@ -36,7 +36,7 @@ public class Loganalysis {
         job1.setOutputKeyClass(NullWritable.class);
         job1.setOutputValueClass(Text.class);
         job1.setOutputFormatClass(TextOutputFormat.class);
-        MultipleOutputs.addNamedOutput(job1, "text", TextOutputFormat.class, NullWritable.class, WebLogBean.class);
+//        MultipleOutputs.addNamedOutput(job1, "text", TextOutputFormat.class, NullWritable.class, WebLogBean.class);
         MultipleOutputs.addNamedOutput(job1, "sequence", SequenceFileOutputFormat.class, Text.class, WebLogBean.class);
 
         // 设置任务1的输出路径
@@ -71,16 +71,40 @@ public class Loganalysis {
         job3.setMapperClass(Task3.IpMapper.class);
         job3.setReducerClass(Task3.IpReducer.class);
         job3.setInputFormatClass(SequenceFileInputFormat.class);
-
         job3.setOutputKeyClass(Text.class);
         job3.setOutputValueClass(Text.class);
-
         fs.delete(new Path("output3"), true);
         FileInputFormat.addInputPath(job3, interinput);
         FileOutputFormat.setOutputPath(job3, new Path("output3"));
 
 
-        System.exit(job3.waitForCompletion(true) && job2.waitForCompletion(true) ? 0 : 1);// 提交作业并等待完成
+//        System.exit(job3.waitForCompletion(true) && job2.waitForCompletion(true) ? 0 : 1);// 提交作业并等待完成
+
+        Job job4=Job.getInstance(conf,"Task4");
+        job4.setJarByClass(Task4.class);
+        job4.setMapperClass(Task4.Hour_visitMapper.class);
+        job4.setCombinerClass(Task4.Hour_visitReducer.class);
+        job4.setReducerClass(Task4.Hour_visitReducer.class);
+        job4.setInputFormatClass(SequenceFileInputFormat.class);
+        job4.setOutputKeyClass(Text.class);
+        job4.setOutputValueClass(IntWritable.class);
+        fs.delete(new Path("output4"), true);
+        FileInputFormat.addInputPath(job4, interinput);
+        FileOutputFormat.setOutputPath(job4, new Path("output4"));
+        //System.exit(job4.waitForCompletion(true)&&job3.waitForCompletion(true) && job2.waitForCompletion(true) ? 0 : 1);// 提交作业并等待完成
+
+        Job job5=Job.getInstance(conf,"Task5");
+        job5.setJarByClass(Task5.class);
+        job5.setMapperClass(Task5.BrowserTypeMapper.class);
+        job5.setCombinerClass(Task5.BrowserTypeReducer.class);
+        job5.setReducerClass(Task5.BrowserTypeReducer.class);
+        job5.setInputFormatClass(SequenceFileInputFormat.class);
+        job5.setOutputKeyClass(Text.class);
+        job5.setOutputValueClass(IntWritable.class);
+        fs.delete(new Path("output5"), true);
+        FileInputFormat.addInputPath(job5, interinput);
+        FileOutputFormat.setOutputPath(job5, new Path("output5"));
+        System.exit(job5.waitForCompletion(true)&&job4.waitForCompletion(true)&&job3.waitForCompletion(true) && job2.waitForCompletion(true) ? 0 : 1);// 提交作业并等待完成
 
     }
 }

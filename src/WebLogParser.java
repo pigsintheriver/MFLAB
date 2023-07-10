@@ -22,10 +22,10 @@ public class WebLogParser {
                 time_local = "-invalid time-";
             }
             log.setTime_local(time_local);
-            String format1 = "dd/MMM/yyyy:HH:mm:ss";
+            String format1 = "dd/MMM/yyyy:HH:mm:ss Z";
             String format2 = "yyyy.MM.dd:HH:mm:ss";
             String format3 = "yyyyMMddHH";
-            SimpleDateFormat date1 = new SimpleDateFormat(format1, Locale.ENGLISH);
+            SimpleDateFormat date1 = new SimpleDateFormat(format1,Locale.ENGLISH);
             SimpleDateFormat date2 = new SimpleDateFormat(format2);
             SimpleDateFormat date3 = new SimpleDateFormat(format3);
             date2.setTimeZone(TimeZone.getTimeZone("GMT"));

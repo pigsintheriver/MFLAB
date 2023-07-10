@@ -133,19 +133,32 @@ public class WebLogBean implements Writable {
     //重写toString()方法,使用Hive默认分隔符进行分隔，为后期导入Hive表提供便利
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(this.valid);
-        sb.append(" ").append(this.getRemote_addr());
-        sb.append(" ").append(this.getRemote_user());
-        sb.append(" [").append(this.getTime_local()).append("]");
-        sb.append(" \"").append(this.getRequest()).append("\"");
-        sb.append(" ").append(this.getStatus());
-        sb.append(" ").append(this.getBody_bytes_sent());
-        sb.append(" \"").append(this.getHttp_referer()).append("\"");
-        sb.append(" \"").append(this.getHttp_user_agent()).append("\"");
-        sb.append(" ").append(this.getTime_detail());
-        sb.append(" ").append(this.getTime_til_hour());
-        sb.append(" ").append(this.getHttp_body());
+//        StringBuilder sb = new StringBuilder();
+//        sb.append(this.valid);
+//        sb.append(" ").append(this.getRemote_addr());
+//        sb.append(" ").append(this.getRemote_user());
+//        sb.append(" [").append(this.getTime_local()).append("]");
+//        sb.append(" \"").append(this.getRequest()).append("\"");
+//        sb.append(" ").append(this.getStatus());
+//        sb.append(" ").append(this.getBody_bytes_sent());
+//        sb.append(" \"").append(this.getHttp_referer()).append("\"");
+//        sb.append(" \"").append(this.getHttp_user_agent()).append("\"");
+//        sb.append(" ").append(this.getTime_detail());
+//        sb.append(" ").append(this.getTime_til_hour());
+//        sb.append(" ").append(this.getHttp_body());
+//        return sb.toString();
+        StringBuilder sb=new StringBuilder();
+        sb.append("Remote Addr:").append(this.getRemote_addr()).append('\n');
+        sb.append("Remote User:").append(this.getRemote_user()).append('\n');
+        sb.append("Time_Local:").append(this.getTime_local()).append('\n');
+        sb.append("Request:").append(this.getRequest()).append('\n');
+        sb.append("Status:").append(this.getStatus()).append('\n');
+        sb.append("Body_bytes_sent:").append(this.getBody_bytes_sent()).append('\n');
+        sb.append("Http_referer:").append(this.getHttp_referer()).append('\n');
+        sb.append("Http_user_agent:").append(this.getHttp_user_agent()).append('\n');
+        sb.append(this.getTime_detail()).append('\n');
+        sb.append(this.getTime_til_hour()).append('\n');
+        sb.append(this.getHttp_body()).append('\n');
         return sb.toString();
     }
 

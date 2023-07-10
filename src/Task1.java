@@ -30,7 +30,7 @@ public class Task1 {
             NullWritable outputkey = null;
             String line = value.toString();
             WebLogBean log=WebLogParser.parser(line);
-            mos.write("text",null,log,"text/text");
+//            mos.write("text",null,log,"text/text");
             mos.write("sequence",new Text(""),log,"sequence/sequence");
             context.write(null, new Text(log.toString()));
         }
