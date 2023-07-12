@@ -12,6 +12,9 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
+import java.util.TreeMap;
+import java.util.Collections;
+import  java.util.Map;
 
 import java.io.IOException;
 
@@ -71,8 +74,14 @@ public class Task2 {
         }
     }
 
-    public static class CountReducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-        private IntWritable result = new IntWritable();
+    public static class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+        //private IntWritable result = new IntWritable();
+        private TreeMap<Integer, Text> sortedResult;
+
+        protected void setup(Context context) {
+            sortedResult = new TreeMap<>(Collections.reverseOrder());
+        }
+
 
         public void reduce(Text key, Iterable<IntWritable> values, Context context)
                 throws IOException, InterruptedException {
@@ -80,8 +89,15 @@ public class Task2 {
             for (IntWritable val : values) {
                 sum += val.get();
             }
-            result.set(sum);
-            context.write(key, result);
+            context.write(key,new IntWritable((sum)));
+            sortedResult.put(sum, new Text(key));
+        }
+        protected void cleanup(Reducer<Text, IntWritable, Text, IntWritable>.Context context)
+                throws IOException, InterruptedException {
+            for (Map.Entry<Integer, Text> entry : sortedResult.entrySet()) {
+//                context.write(entry.getValue(), new IntWritable(entry.getKey()));
+            }
         }
     }
+
 }

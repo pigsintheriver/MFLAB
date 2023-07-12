@@ -1,38 +1,16 @@
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapreduce.Job;
+
+import java.util.TreeMap;
+import java.util.Collections;
+import  java.util.Map;
+
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-
-import java.io.IOException;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapreduce.*;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.Path;
-
-import java.io.IOException;
-import java.util.Iterator;
-import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.io.FloatWritable;
-import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
-import org.apache.hadoop.mapreduce.lib.partition.TotalOrderPartitioner;
-import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class Task3 {
     public static class IpMapper extends Mapper<Text, WebLogBean, Text, Text> {
 
@@ -56,7 +34,11 @@ public class Task3 {
     }
 
     public static class IpReducer extends Reducer<Text, Text, Text, Text> {
+        private TreeMap<Integer, Text> sortedResult;
 
+        protected void setup(Context context) {
+            sortedResult = new TreeMap<>();
+        }
 
         public void reduce(Text key, Iterable<Text> values, Reducer<Text, Text, Text, Text>.Context context)
                 throws IOException, InterruptedException {
@@ -66,6 +48,25 @@ public class Task3 {
             }
             int count = toCount.size();
             context.write(key,new Text(Integer.toString(count)));
+            sortedResult.put(count, new Text(key));
         }
+
+        protected void cleanup(Context context) throws IOException, InterruptedException {
+            for (Text value : sortedResult.descendingMap().values()) {
+                for (Map.Entry<Integer, Text> entry : sortedResult.entrySet()) {
+                    if (entry.getValue().equals(value)) {
+                        Integer count = entry.getKey();
+//                        context.write(value, new Text(String.valueOf(count)));
+                        break;
+                    }
+                }
+            }
+        }
+
     }
+
+
+
+
+
 }

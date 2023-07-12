@@ -3,16 +3,18 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
-public class Task4 {
-    public static class Hour_visitMapper extends Mapper<Text,WebLogBean,Text,IntWritable>{
+
+public class BadRequestCount {
+    public static class BR_ipMapper extends Mapper<Text,WebLogBean, Text, IntWritable>{
         private final static IntWritable one = new IntWritable(1);
-        public void map(Text key,WebLogBean value,Context context) throws IOException,InterruptedException{
-                String time_til_hour=value.getTime_til_hour();
-                context.write(new Text(time_til_hour),one);
+        public void map(Text key, WebLogBean value, Context context) throws IOException, InterruptedException {
+            if(!value.isvalid()){
+                context.write(new Text(value.getRemote_addr()),one);
+            }
+
         }
     }
-
-    public static class Hour_visitReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
+    public static class BR_ipReducer extends Reducer<Text,IntWritable,Text,IntWritable>{
         public void reduce(Text key,Iterable<IntWritable> values,Context context)throws IOException, InterruptedException {
             int sum=0;
             for(IntWritable val:values){
